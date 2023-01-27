@@ -23,13 +23,19 @@ index = 0
 for holiday in holidays:
     if holiday["holiday_people_affected"] in ["staffs", "all"]:
         event = Event()
-        event.add('summary', holiday['holiday_name'])
+        event.add('summary', holiday['holiday_name'] + " " + str(year))
         # date = datetime.strptime(holiday['holiday_start_date'][:-4], '%a, %d %b %Y %H:%M:%S')
         date = parser.parse(holiday['holiday_start_date'])
         # end_date = parser.parse(holiday['holiday_end_date'][:-4])
         event.add('dtstart', date)
         event.add('dtend', date)
         event.add('dtstamp', date)
+
+        # print(holiday['holiday_name'])
+        # if holiday['holiday_name'].startswith("Christmas Day") or holiday['holiday_name'].startswith("New Year"):
+        #     event.extra.append(ContentLine(
+        #         name="RRULE", value=f"FREQ=YEARLY;BYMONTH={date.month};BYMONTHDAY={date.day}"
+        #     ))
         calendar.add_component(event)
 
 f = open(f"ics_files/holiday-{year}.ics", 'wb')
